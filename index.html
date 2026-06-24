@@ -39,27 +39,6 @@
             --text-main: var(--text);
         }
 
-        [data-theme="dark"] {
-            --bg: #0d1117;
-            --bg-alt: #161b22;
-            --text: #e6edf3;
-            --text-muted: #8b949e;
-            --card-bg: #161b22;
-            --card-border: #30363d;
-            --navbar-bg: rgba(13, 17, 23, 0.95);
-            --footer-bg: #0d1117;
-            --bg-color: var(--bg);
-            --section-alt: var(--bg-alt);
-            --text-main: var(--text);
-        }
-
-        /* Tweak logos for dark mode */
-        [data-theme="dark"] .nav-logo,
-        [data-theme="dark"] .footer-logo-img,
-        [data-theme="dark"] .pillar-card .icon img {
-            filter: brightness(0) invert(1);
-        }
-
         * {
             box-sizing: border-box;
             margin: 0;
@@ -409,24 +388,58 @@
             line-height: 1.3;
         }
 
-        .lang-btn,
-        .theme-btn {
+        .lang-toggle-container {
+            display: inline-flex;
+            align-items: center;
+            position: relative;
+            width: 76px;
+            height: 32px;
             background: var(--bg-alt);
             border: 1px solid var(--card-border);
             border-radius: 20px;
-            padding: 8px 16px;
-            font-family: 'DM Sans', sans-serif;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--primary);
             cursor: pointer;
+            user-select: none;
+            padding: 2px;
             transition: var(--transition);
         }
 
-        .lang-btn:hover,
-        .theme-btn:hover {
-            background: var(--highlight);
-            color: #fff;
+        .lang-toggle-bg {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 34px;
+            height: 26px;
+            background: var(--primary);
+            border-radius: 18px;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1;
+        }
+
+        .lang-label {
+            flex: 1;
+            text-align: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            z-index: 2;
+            transition: color 0.3s ease;
+            line-height: 26px;
+        }
+
+        .lang-label.active {
+            color: #ffffff;
+        }
+
+        .lang-toggle-container.en-active .lang-toggle-bg {
+            transform: translateX(36px);
+        }
+        
+        .lang-toggle-container.en-active .lang-label.en {
+            color: #ffffff;
+        }
+        
+        .lang-toggle-container.en-active .lang-label.id {
+            color: var(--primary);
         }
 
         .hamburger {
@@ -1023,9 +1036,6 @@
             height: auto;
         }
 
-        [data-theme="dark"] .modal-logo {
-            filter: brightness(0) invert(1);
-        }
 
         .modal-title {
             font-size: 1.5rem;
@@ -1344,9 +1354,6 @@
                 display: none;
             }
 
-            .lang-btn .lang-text {
-                font-size: 0.75rem;
-            }
         }
 
         /* ── Farm Modal Styles ────────────────────────────────────── */
@@ -1375,11 +1382,6 @@
             position: relative;
             border-bottom: 1px solid var(--card-border);
             flex-shrink: 0;
-        }
-
-        [data-theme="dark"] .farm-modal-header {
-            background: var(--card-bg);
-            border-bottom-color: var(--card-border);
         }
 
         .farm-modal-header .modal-close {
@@ -1417,10 +1419,6 @@
             height: 120px;
             object-fit: contain;
             filter: none;
-        }
-
-        [data-theme="dark"] .farm-modal-logo {
-            filter: brightness(0) invert(1);
         }
 
         .farm-modal-brand-text h3 {
@@ -2078,59 +2076,59 @@
         /* Responsive styling for custom modals */
         @media (max-width: 768px) {
             .farm-modal-header {
-                padding: 16px 16px 12px 16px;
+                padding: 12px 14px 10px 14px;
             }
 
             .farm-modal-header .modal-close {
-                top: 12px;
-                right: 12px;
-                width: 32px;
-                height: 32px;
-                font-size: 1.1rem;
+                top: 10px;
+                right: 10px;
+                width: 30px;
+                height: 30px;
+                font-size: 1rem;
             }
 
             .farm-modal-brand {
-                gap: 12px;
-                margin-bottom: 8px;
+                gap: 10px;
+                margin-bottom: 6px;
             }
 
             .farm-modal-logo {
-                width: 50px;
-                height: 50px;
+                width: 40px;
+                height: 40px;
             }
 
             .farm-modal-brand-text h3 {
-                font-size: 1.1rem;
+                font-size: 1rem;
             }
 
             .farm-modal-brand-text .division-badge {
-                font-size: 0.65rem;
-                padding: 2px 6px;
+                font-size: 0.6rem;
+                padding: 1px 6px;
                 margin-top: 1px;
             }
 
             .farm-modal-hero-title {
-                font-size: 1.1rem;
-                line-height: 1.3;
-                margin-bottom: 8px;
+                font-size: 1rem;
+                line-height: 1.25;
+                margin-bottom: 6px;
             }
 
             .farm-modal-hero-sub {
-                display: none; /* Sembunyikan deskripsi di mobile agar area scroll lebih luas */
+                display: none;
             }
 
             .farm-modal-hero-actions {
-                gap: 8px;
+                gap: 6px;
             }
 
             .farm-modal-hero-actions .btn {
-                padding: 6px 12px;
-                font-size: 0.8rem;
+                padding: 5px 10px;
+                font-size: 0.75rem;
                 border-radius: 6px;
             }
 
             .farm-modal-scrollable {
-                padding: 24px;
+                padding: 20px 16px;
             }
 
             .product-list-card {
@@ -2378,9 +2376,11 @@
                 <li><a href="#tentang" data-id="Tentang Kami" data-en="About Us">Tentang Kami</a></li>
                 <li><a href="#kontak" data-id="Kontak" data-en="Contact">Kontak</a></li>
             </ul>
-            <button id="langToggle" class="lang-btn"><span class="lang-text" data-id="ID | EN" data-en="EN | ID">ID |
-                    EN</span></button>
-            <button id="themeToggle" class="theme-btn" aria-label="Toggle dark mode">🌙</button>
+            <div class="lang-toggle-container" id="langToggle">
+                <div class="lang-toggle-bg"></div>
+                <span class="lang-label id active">ID</span>
+                <span class="lang-label en">EN</span>
+            </div>
             <div class="hamburger">
                 <div class="bar1"></div>
                 <div class="bar2"></div>
@@ -3292,29 +3292,7 @@
     </div>
     <!-- JavaScript -->
     <script>
-        // ── Dark Mode ──────────────────────────────────────────────
-        const themeToggle = document.getElementById('themeToggle');
         const html = document.documentElement;
-
-        // Restore saved preference
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark') {
-            html.setAttribute('data-theme', 'dark');
-            themeToggle.textContent = '☀️';
-        }
-
-        themeToggle.addEventListener('click', () => {
-            const isDark = html.getAttribute('data-theme') === 'dark';
-            if (isDark) {
-                html.removeAttribute('data-theme');
-                themeToggle.textContent = '🌙';
-                localStorage.setItem('theme', 'light');
-            } else {
-                html.setAttribute('data-theme', 'dark');
-                themeToggle.textContent = '☀️';
-                localStorage.setItem('theme', 'dark');
-            }
-        });
 
         // ── Language Toggle ────────────────────────────────────────
         const langBtn = document.getElementById('langToggle');
@@ -3336,8 +3314,16 @@
                 }
             });
 
-            // Update lang text in button
-            document.querySelector('.lang-text').textContent = toEn ? 'EN | ID' : 'ID | EN';
+            // Update lang toggle visual state
+            if (toEn) {
+                langBtn.classList.add('en-active');
+                langBtn.querySelector('.lang-label.en').classList.add('active');
+                langBtn.querySelector('.lang-label.id').classList.remove('active');
+            } else {
+                langBtn.classList.remove('en-active');
+                langBtn.querySelector('.lang-label.id').classList.add('active');
+                langBtn.querySelector('.lang-label.en').classList.remove('active');
+            }
 
             // Update modal if it's currently open
             if (typeof updateModalContent === 'function') {
