@@ -2078,20 +2078,59 @@
         /* Responsive styling for custom modals */
         @media (max-width: 768px) {
             .farm-modal-header {
-                padding: 20px 20px 16px 20px;
+                padding: 16px 16px 12px 16px;
+            }
+
+            .farm-modal-header .modal-close {
+                top: 12px;
+                right: 12px;
+                width: 32px;
+                height: 32px;
+                font-size: 1.1rem;
+            }
+
+            .farm-modal-brand {
+                gap: 12px;
+                margin-bottom: 8px;
+            }
+
+            .farm-modal-logo {
+                width: 50px;
+                height: 50px;
+            }
+
+            .farm-modal-brand-text h3 {
+                font-size: 1.1rem;
+            }
+
+            .farm-modal-brand-text .division-badge {
+                font-size: 0.65rem;
+                padding: 2px 6px;
+                margin-top: 1px;
+            }
+
+            .farm-modal-hero-title {
+                font-size: 1.1rem;
+                line-height: 1.3;
+                margin-bottom: 8px;
+            }
+
+            .farm-modal-hero-sub {
+                display: none; /* Sembunyikan deskripsi di mobile agar area scroll lebih luas */
+            }
+
+            .farm-modal-hero-actions {
+                gap: 8px;
+            }
+
+            .farm-modal-hero-actions .btn {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+                border-radius: 6px;
             }
 
             .farm-modal-scrollable {
                 padding: 24px;
-            }
-
-            .farm-modal-hero-title {
-                font-size: 1.3rem;
-            }
-
-            .farm-modal-logo {
-                width: 90px;
-                height: 90px;
             }
 
             .product-list-card {
