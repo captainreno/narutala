@@ -115,7 +115,7 @@
         }
 
         .section {
-            padding: 120px 0;
+            padding: 140px 0;
             position: relative;
         }
 
@@ -124,37 +124,30 @@
         }
 
         .section-label {
-            color: var(--secondary);
+            color: var(--primary);
             font-family: 'DM Sans', sans-serif;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
-            font-size: 0.95rem;
-            margin-bottom: 16px;
-            display: flex;
+            letter-spacing: 0.08em;
+            font-size: 0.8rem;
+            margin-bottom: 20px;
+            display: inline-flex;
             align-items: center;
-            gap: 12px;
+            justify-content: center;
+            background: var(--highlight);
+            padding: 6px 16px;
+            border-radius: 30px;
         }
 
-        .section-label::before {
-            content: '';
-            display: block;
-            width: 40px;
-            height: 2px;
-            background: var(--accent);
+        .section-label::before,
+        .section-label::after,
+        .text-center .section-label::before,
+        .text-center .section-label::after {
+            display: none !important;
         }
 
         .text-center .section-label {
-            justify-content: center;
-        }
-
-        .text-center .section-label::before,
-        .text-center .section-label::after {
-            content: '';
-            display: block;
-            width: 40px;
-            height: 2px;
-            background: var(--accent);
+            display: inline-flex;
         }
 
         /* Components */
@@ -457,75 +450,148 @@
 
         /* Hero */
         .hero {
-            height: 100vh;
-            min-height: 600px;
-            background: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1920&q=80') center/cover no-repeat;
+            min-height: 100vh;
+            background: linear-gradient(rgba(13, 28, 55, 0.5), rgba(13, 28, 55, 0.5)), url('assets/hero-bg.jpg') center/cover no-repeat;
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             color: #fff;
+            padding: 100px 0 80px;
         }
 
         .hero-overlay {
-            position: absolute;
-            inset: 0;
-            background: var(--overlay);
-            z-index: 1;
+            display: none;
         }
 
         .hero-content {
             position: relative;
             z-index: 2;
-            max-width: 900px;
-            padding: 0 20px;
+            max-width: 1200px;
+            width: 100%;
+            padding: 0 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .hero .badge {
             background: rgba(255, 255, 255, 0.15);
+            color: #fff;
             backdrop-filter: blur(8px);
             border: 1px solid rgba(255, 255, 255, 0.3);
             padding: 8px 20px;
             border-radius: 30px;
-            font-size: 0.875rem;
-            font-weight: 500;
-            letter-spacing: 1px;
-            margin-bottom: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            margin-bottom: 24px;
             display: inline-block;
         }
 
         .hero h1 {
             color: #fff;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
+            font-weight: 700;
+            font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+            line-height: 1.15;
+            letter-spacing: -0.02em;
         }
 
         .hero p {
             color: rgba(255, 255, 255, 0.9);
-            font-size: 1.25rem;
-            max-width: 600px;
-            margin: 0 auto 40px;
+            font-size: clamp(1.05rem, 2vw, 1.25rem);
+            max-width: 650px;
+            margin: 0 auto 36px;
+            line-height: 1.6;
         }
 
         .hero-actions {
             display: flex;
-            gap: 20px;
+            gap: 16px;
             justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .hero .btn-outline {
+            border-color: #fff;
+            color: #fff;
+            background: transparent;
+        }
+
+        .hero .btn-outline:hover {
+            background: #fff;
+            color: var(--text-main);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
         }
 
         .scroll-indicator {
             position: absolute;
-            bottom: 40px;
+            bottom: 24px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 2;
-            color: rgba(255, 255, 255, 0.8);
+            color: #fff;
             font-size: 1.5rem;
             animation: bounce 2s infinite;
         }
 
-        @keyframes bounce {
+        /* Hero Gallery Strip */
+        .hero-gallery-strip {
+            width: 100%;
+            margin-top: 40px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            padding: 10px 0 20px;
+        }
+        
+        .hero-gallery-strip::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .hero-gallery-track {
+            display: flex;
+            gap: 24px;
+            padding: 0 20px;
+            justify-content: flex-start;
+        }
 
+        @media (min-width: 1200px) {
+            .hero-gallery-track {
+                justify-content: center;
+                padding: 0;
+            }
+        }
+        
+        .hero-gallery-item {
+            width: 280px;
+            height: 180px;
+            flex-shrink: 0;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.06);
+            transition: var(--transition);
+        }
+        
+        .hero-gallery-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(61, 90, 128, 0.12);
+        }
+        
+        .hero-gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .hero-gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        @keyframes bounce {
             0%,
             20%,
             50%,
@@ -547,7 +613,7 @@
         .about-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 60px;
+            gap: 80px;
             align-items: center;
         }
 
@@ -796,7 +862,7 @@
 
         /* Philosophy */
         .philosophy {
-            background-color: var(--primary);
+            background-color: var(--footer-bg);
             color: #fff;
             text-align: center;
             padding: 140px 0;
@@ -2705,28 +2771,48 @@
                 <p style="color: var(--text-muted); margin-bottom: 40px; font-size: 1.1rem; line-height: 1.6;" data-id="Kami selalu terbuka untuk mendiskusikan kemitraan, peluang bisnis, atau menjawab pertanyaan Anda seputar layanan Narutala Company." data-en="We are always open to discuss partnerships, business opportunities, or answer your questions about Narutala Company services.">Kami selalu terbuka untuk mendiskusikan kemitraan, peluang bisnis, atau menjawab pertanyaan Anda seputar layanan Narutala Company.</p>
                 <div class="contact-items-wrapper">
                     <div class="contact-item">
-                        <div class="contact-item-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div class="contact-item-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                        </div>
                         <div class="contact-item-text">
                             <strong data-id="Kantor Pusat" data-en="Head Office">Kantor Pusat</strong><br>
                             Dusun Pacitran, Desa Baledu, Kec. Kandangan, <br>Kab. Temanggung, Jawa Tengah
                         </div>
                     </div>
                     <div class="contact-item">
-                        <div class="contact-item-icon"><i class="fas fa-envelope"></i></div>
+                        <div class="contact-item-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                        </div>
                         <div class="contact-item-text">
                             <strong>Email</strong><br>
                             <a href="mailto:narutalacompany@gmail.com">narutalacompany@gmail.com</a>
                         </div>
                     </div>
                     <div class="contact-item">
-                        <div class="contact-item-icon"><i class="fab fa-whatsapp"></i></div>
+                        <div class="contact-item-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                            </svg>
+                        </div>
                         <div class="contact-item-text">
                             <strong>WhatsApp</strong><br>
                             <a href="https://wa.me/6281947828896" target="_blank">081947828896</a>
                         </div>
                     </div>
                     <div class="contact-item">
-                        <div class="contact-item-icon"><i class="fas fa-globe"></i></div>
+                        <div class="contact-item-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="2" y1="12" x2="22" y2="12"></line>
+                                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                            </svg>
+                        </div>
                         <div class="contact-item-text" data-id="<strong>Cakupan</strong><br>Melayani seluruh Jawa Tengah" data-en="<strong>Coverage</strong><br>Serving all of Central Java">
                             <strong>Cakupan</strong><br>
                             Melayani seluruh Jawa Tengah
@@ -3241,7 +3327,7 @@
                                 </li>
                             </ul>
                             
-                            <img src="assets/real-photo-1.png" alt="Kadoku Farm Masterclass" style="width: 100%; height: 450px; object-fit: cover; object-position: center 65%; border-radius: 12px; margin-bottom: 24px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                            <img src="assets/kadoku-masterclass-poster.jpg" alt="Kadoku Masterclass 2D1N in Nanggulan" style="width: 100%; height: auto; max-height: 450px; object-fit: contain; border-radius: 12px; margin-bottom: 24px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); background: #f5f5f0;">
 
                             <!-- This uses a generic link to a PDF -->
                             <a href="assets/proposal-masterclass.pdf" target="_blank" class="price-card-btn" style="background: var(--primary); color: #ffffff;" data-id="Download / Akses Dokumen Penawaran Masterclass" data-en="Download / Access Masterclass Proposal"><i class="fas fa-download" style="margin-right: 6px;"></i> Download / Akses Dokumen Penawaran Masterclass</a>
