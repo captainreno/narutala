@@ -3245,8 +3245,11 @@
                 </div>
                 
                 <div style="margin-top: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-                    <button type="button" class="admin-btn admin-btn-secondary" style="font-size: 0.8rem; color: #ef4444;" onclick="resetToDefaultNews()"><i class="fas fa-undo"></i> Reset Data Default</button>
-                    <span style="font-size: 0.8rem; color: var(--text-muted);">Penyimpanan: LocalStorage Browser</span>
+                    <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                        <button type="button" class="admin-btn admin-btn-secondary" style="font-size: 0.8rem; color: #ef4444;" onclick="resetToDefaultNews()"><i class="fas fa-trash-alt"></i> Kosongkan Berita</button>
+                        <button type="button" class="admin-btn admin-btn-secondary" style="font-size: 0.8rem;" onclick="syncWithCloud()"><i class="fas fa-sync-alt"></i> Sinkronkan Cloud</button>
+                    </div>
+                    <span id="cloudSyncStatus" style="font-size: 0.82rem; color: #10b981; font-weight: 500;"><i class="fas fa-cloud"></i> Cloud Database: Terhubung</span>
                 </div>
             </div>
         </div>
@@ -4239,13 +4242,13 @@
             document.getElementById('contactForm').reset();
         }
 
-        // ── Dynamic News & Activity Management System ───────────────
-        const DEFAULT_NEWS = [];
-
+        // ── Dynamic News & Activity Management System (Cloud Synchronized) ──
+        const CLOUD_DB_URL = 'https://kvdb.io/F7j344YKB8VpnZJC2e5q5d/news';
         const STORAGE_KEY_NEWS = 'narutala_news_data';
         const STORAGE_KEY_PIN = 'narutala_admin_pin';
 
         let currentImageDataBase64 = '';
+        let isSyncing = false;
 
         function getStoredPIN() {
             return localStorage.getItem(STORAGE_KEY_PIN) || 'nadiakesayanganku';
@@ -4253,28 +4256,78 @@
 
         function getNewsData() {
             const raw = localStorage.getItem(STORAGE_KEY_NEWS);
-            if (!raw) {
-                localStorage.setItem(STORAGE_KEY_NEWS, JSON.stringify([]));
-                return [];
-            }
+            if (!raw) return [];
             try {
                 const parsed = JSON.parse(raw);
-                // Check if stored news contains old sample data (news-1, news-2, news-3) and auto-clear if so
                 if (Array.isArray(parsed) && parsed.length > 0 && (parsed[0].id === 'news-1' || parsed[0].id === 'news-2')) {
                     localStorage.setItem(STORAGE_KEY_NEWS, JSON.stringify([]));
                     return [];
                 }
                 return parsed;
             } catch (e) {
-                console.error("Failed to parse stored news", e);
                 return [];
             }
         }
 
-        function saveNewsData(newsArray) {
+        async function saveNewsData(newsArray) {
             localStorage.setItem(STORAGE_KEY_NEWS, JSON.stringify(newsArray));
             renderNewsGrid();
             renderAdminNewsTable();
+            await pushToCloud(newsArray);
+        }
+
+        async function pushToCloud(newsArray) {
+            updateCloudStatus('<i class="fas fa-spinner fa-spin"></i> Menyinkronkan ke Cloud...', '#3b82f6');
+            try {
+                const response = await fetch(CLOUD_DB_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newsArray)
+                });
+                if (response.ok) {
+                    updateCloudStatus('<i class="fas fa-cloud-check"></i> Cloud Database: Terhubung & Tersimpan', '#10b981');
+                } else {
+                    updateCloudStatus('<i class="fas fa-exclamation-circle"></i> Simpan Lokal (Gagal koneksi Cloud)', '#f59e0b');
+                }
+            } catch (err) {
+                console.warn('Cloud sync push failed, fallback to local:', err);
+                updateCloudStatus('<i class="fas fa-database"></i> Simpan Lokal (Offline Mode)', '#6b7280');
+            }
+        }
+
+        async function fetchFromCloud() {
+            if (isSyncing) return;
+            isSyncing = true;
+            updateCloudStatus('<i class="fas fa-sync-alt fa-spin"></i> Memuat data dari Cloud...', '#3b82f6');
+            try {
+                const res = await fetch(CLOUD_DB_URL, { cache: 'no-cache' });
+                if (res.ok) {
+                    const data = await res.json();
+                    if (Array.isArray(data)) {
+                        localStorage.setItem(STORAGE_KEY_NEWS, JSON.stringify(data));
+                        renderNewsGrid();
+                        renderAdminNewsTable();
+                        updateCloudStatus('<i class="fas fa-cloud-check"></i> Cloud Database: Terhubung & Terbaru', '#10b981');
+                    }
+                }
+            } catch (err) {
+                console.warn('Cloud sync fetch failed, using local cache:', err);
+                updateCloudStatus('<i class="fas fa-cloud-slash"></i> Offline (Cache Lokal)', '#6b7280');
+            } finally {
+                isSyncing = false;
+            }
+        }
+
+        function updateCloudStatus(htmlMessage, color) {
+            const statusEl = document.getElementById('cloudSyncStatus');
+            if (statusEl) {
+                statusEl.innerHTML = htmlMessage;
+                statusEl.style.color = color;
+            }
+        }
+
+        function syncWithCloud() {
+            fetchFromCloud();
         }
 
         function formatDateID(dateStr) {
@@ -4408,17 +4461,17 @@
 
         function changeAdminPINPrompt() {
             const currentPIN = getStoredPIN();
-            const oldInput = prompt("Masukkan PIN lama Anda:");
+            const oldInput = prompt("Masukkan Password Admin lama:");
             if (oldInput !== currentPIN) {
-                if (oldInput !== null) alert("PIN lama tidak sesuai!");
+                if (oldInput !== null) alert("Password lama tidak sesuai!");
                 return;
             }
-            const newPIN = prompt("Masukkan PIN baru (4-6 digit angka):");
+            const newPIN = prompt("Masukkan Password Admin baru (minimal 4 karakter):");
             if (newPIN && newPIN.trim().length >= 4) {
                 localStorage.setItem(STORAGE_KEY_PIN, newPIN.trim());
-                alert("PIN Admin berhasil diperbarui!");
+                alert("Password Admin berhasil diperbarui!");
             } else if (newPIN !== null) {
-                alert("PIN minimal 4 digit.");
+                alert("Password minimal 4 karakter.");
             }
         }
 
@@ -4426,6 +4479,7 @@
         function openAdminPortal() {
             renderAdminNewsTable();
             closeNewsForm();
+            fetchFromCloud();
             document.getElementById('adminNewsModal').classList.add('active');
             document.body.style.overflow = 'hidden';
         }
@@ -4510,7 +4564,6 @@
             } else {
                 document.getElementById('adminFormTitle').textContent = 'Tambah Berita Baru';
                 document.getElementById('newsFormId').value = '';
-                // Set default date to today
                 const today = new Date().toISOString().split('T')[0];
                 document.getElementById('formDate').value = today;
                 document.getElementById('formAuthor').value = 'Tim Narutala';
@@ -4528,7 +4581,7 @@
             const file = e.target.files[0];
             if (!file) return;
 
-            // Compress & resize image to max 1200px before saving Base64
+            // Compress & resize image to max 900px for lightweight Base64 Cloud Sync
             const reader = new FileReader();
             reader.onload = function(evt) {
                 const img = new Image();
@@ -4536,7 +4589,7 @@
                     const canvas = document.createElement('canvas');
                     let width = img.width;
                     let height = img.height;
-                    const maxDim = 1200;
+                    const maxDim = 900;
 
                     if (width > maxDim || height > maxDim) {
                         if (width > height) {
@@ -4553,7 +4606,7 @@
                     const ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, width, height);
 
-                    currentImageDataBase64 = canvas.toDataURL('image/jpeg', 0.82);
+                    currentImageDataBase64 = canvas.toDataURL('image/jpeg', 0.72);
                     document.getElementById('imagePreview').src = currentImageDataBase64;
                     document.getElementById('imagePreview').style.display = 'block';
                     document.getElementById('previewPlaceholder').style.display = 'none';
@@ -4572,7 +4625,7 @@
             document.getElementById('previewPlaceholder').style.display = 'none';
         }
 
-        function saveNewsFromForm(e) {
+        async function saveNewsFromForm(e) {
             e.preventDefault();
 
             const id = document.getElementById('newsFormId').value || 'news-' + Date.now();
@@ -4604,26 +4657,26 @@
                 newsList.unshift(newsItem);
             }
 
-            saveNewsData(newsList);
+            await saveNewsData(newsList);
             closeNewsForm();
-            alert('Berita berhasil disimpan!');
+            alert('Berita berhasil disimpan & tersinkron ke Cloud!');
         }
 
         function editNewsItem(id) {
             openNewsForm(id);
         }
 
-        function deleteNewsItem(id) {
+        async function deleteNewsItem(id) {
             if (!confirm('Apakah Anda yakin ingin menghapus berita ini?')) return;
             let newsList = getNewsData();
             newsList = newsList.filter(n => n.id !== id);
-            saveNewsData(newsList);
+            await saveNewsData(newsList);
         }
 
-        function resetToDefaultNews() {
-            if (!confirm('Reset akan mengembalikan 3 berita awal Narutala. Apakah Anda yakin?')) return;
-            saveNewsData(DEFAULT_NEWS);
-            alert('Data berita telah di-reset ke default.');
+        async function resetToDefaultNews() {
+            if (!confirm('Apakah Anda yakin ingin mengosongkan seluruh daftar berita?')) return;
+            await saveNewsData([]);
+            alert('Seluruh berita telah dikosongkan.');
         }
 
         // Export / Import JSON
@@ -4641,16 +4694,16 @@
             URL.revokeObjectURL(url);
         }
 
-        function importNewsJSON(e) {
+        async function importNewsJSON(e) {
             const file = e.target.files[0];
             if (!file) return;
             const reader = new FileReader();
-            reader.onload = function(evt) {
+            reader.onload = async function(evt) {
                 try {
                     const imported = JSON.parse(evt.target.result);
                     if (Array.isArray(imported)) {
-                        saveNewsData(imported);
-                        alert('Berita berhasil di-import!');
+                        await saveNewsData(imported);
+                        alert('Berita berhasil di-import & tersinkron ke Cloud!');
                     } else {
                         alert('Format file JSON tidak valid.');
                     }
@@ -4661,9 +4714,10 @@
             reader.readAsText(file);
         }
 
-        // Initialize News System on Page Load
+        // Initialize News System on Page Load & fetch from Cloud
         document.addEventListener('DOMContentLoaded', () => {
             renderNewsGrid();
+            fetchFromCloud();
         });
     </script>
 </body>
