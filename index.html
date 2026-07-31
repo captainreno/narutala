@@ -2405,6 +2405,360 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* ── News & Activities Section Styles ───────────────────────── */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 28px;
+            margin-top: 40px;
+        }
+
+        .news-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+            transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+            position: relative;
+        }
+
+        .news-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(61, 90, 128, 0.12);
+            border-color: var(--accent);
+        }
+
+        .news-card-img-wrapper {
+            position: relative;
+            width: 100%;
+            height: 210px;
+            overflow: hidden;
+            background: #e2e8f0;
+        }
+
+        .news-card-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .news-card:hover .news-card-img-wrapper img {
+            transform: scale(1.06);
+        }
+
+        .news-badge {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: rgba(61, 90, 128, 0.9);
+            color: #ffffff;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            text-transform: uppercase;
+        }
+
+        .news-card-body {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .news-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .news-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .news-card-title {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1.35;
+            margin-bottom: 10px;
+            transition: color 0.3s ease;
+        }
+
+        .news-card:hover .news-card-title {
+            color: var(--primary);
+        }
+
+        .news-card-excerpt {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            line-height: 1.55;
+            margin-bottom: 20px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            flex-grow: 1;
+        }
+
+        .news-card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 16px;
+            border-top: 1px solid var(--card-border);
+        }
+
+        .btn-read-more {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.88rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            transition: gap 0.3s ease, color 0.3s ease;
+        }
+
+        .btn-read-more:hover {
+            gap: 10px;
+            color: var(--secondary);
+        }
+
+        /* Admin floating or section header button */
+        .admin-trigger-btn {
+            background: rgba(61, 90, 128, 0.08);
+            border: 1px solid rgba(61, 90, 128, 0.2);
+            color: var(--primary);
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .admin-trigger-btn:hover {
+            background: var(--primary);
+            color: #ffffff;
+            box-shadow: 0 6px 16px rgba(61, 90, 128, 0.25);
+        }
+
+        /* Modals for News Detail & Admin Portal */
+        .news-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(13, 28, 55, 0.75);
+            backdrop-filter: blur(10px);
+            z-index: 4000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.35s ease;
+            padding: 20px;
+        }
+
+        .news-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .news-modal-box {
+            background: var(--bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            width: 100%;
+            max-width: 820px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+            transform: scale(0.95) translateY(20px);
+            transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .news-modal-overlay.active .news-modal-box {
+            transform: scale(1) translateY(0);
+        }
+
+        .news-modal-header-img {
+            width: 100%;
+            max-height: 380px;
+            object-fit: cover;
+            border-radius: 24px 24px 0 0;
+        }
+
+        .news-modal-content {
+            padding: 32px;
+        }
+
+        .news-modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.88);
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 10;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: var(--transition);
+        }
+
+        .news-modal-close:hover {
+            background: #ef4444;
+            color: #ffffff;
+        }
+
+        /* Admin Portal Forms & Tables */
+        .admin-form-group {
+            margin-bottom: 18px;
+            text-align: left;
+        }
+
+        .admin-form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.88rem;
+            color: var(--text);
+            margin-bottom: 6px;
+        }
+
+        .admin-input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            background: var(--bg-alt);
+            color: var(--text);
+            font-family: inherit;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .admin-input:focus {
+            border-color: var(--primary);
+            background: var(--bg);
+        }
+
+        .admin-btn {
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+
+        .admin-btn-primary {
+            background: var(--primary);
+            color: #ffffff;
+        }
+
+        .admin-btn-primary:hover {
+            background: var(--secondary);
+        }
+
+        .admin-btn-secondary {
+            background: var(--bg-alt);
+            color: var(--text);
+            border: 1px solid var(--card-border);
+        }
+
+        .admin-btn-secondary:hover {
+            background: var(--card-border);
+        }
+
+        .admin-btn-danger {
+            background: #ef4444;
+            color: #ffffff;
+        }
+
+        .admin-btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .admin-table-wrapper {
+            overflow-x: auto;
+            margin-top: 16px;
+            border-radius: 12px;
+            border: 1px solid var(--card-border);
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88rem;
+        }
+
+        .admin-table th, .admin-table td {
+            padding: 12px 14px;
+            text-align: left;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .admin-table th {
+            background: var(--bg-alt);
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .image-preview-container {
+            width: 100%;
+            height: 180px;
+            border: 2px dashed var(--card-border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: var(--bg-alt);
+            margin-top: 8px;
+            position: relative;
+        }
+
+        .image-preview-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
     </style>
 </head>
 
@@ -2732,26 +3086,171 @@
             <div class="text-center fade-in">
                 <div class="section-label" data-id="Kabar Narutala" data-en="Narutala News">Kabar Narutala</div>
                 <h2 data-id="Berita & Kegiatan Terbaru" data-en="Latest News & Activities">Berita & Kegiatan Terbaru</h2>
+                <div>
+                    <button type="button" class="admin-trigger-btn" onclick="openAdminAuth()">
+                        <i class="fas fa-edit"></i> <span data-id="Kelola Berita (Admin)" data-en="Manage News (Admin)">Kelola Berita (Admin)</span>
+                    </button>
+                </div>
             </div>
 
-            <div class="news-grid">
-                <!-- Placeholder 1 -->
-                <div class="news-card fade-in stagger-1" style="min-height: 300px; display: flex; align-items: center; justify-content: center; background: var(--card-border); border: 2px dashed var(--secondary);">
-                    <p style="color: var(--secondary); font-weight: 600;" data-id="Segera Hadir" data-en="Coming Soon">Segera Hadir</p>
-                </div>
-
-                <!-- Placeholder 2 -->
-                <div class="news-card fade-in stagger-2" style="min-height: 300px; display: flex; align-items: center; justify-content: center; background: var(--card-border); border: 2px dashed var(--secondary);">
-                    <p style="color: var(--secondary); font-weight: 600;" data-id="Segera Hadir" data-en="Coming Soon">Segera Hadir</p>
-                </div>
-
-                <!-- Placeholder 3 -->
-                <div class="news-card fade-in stagger-3" style="min-height: 300px; display: flex; align-items: center; justify-content: center; background: var(--card-border); border: 2px dashed var(--secondary);">
-                    <p style="color: var(--secondary); font-weight: 600;" data-id="Segera Hadir" data-en="Coming Soon">Segera Hadir</p>
-                </div>
+            <div class="news-grid" id="newsGrid">
+                <!-- Dynamically loaded via JavaScript -->
             </div>
         </div>
     </section>
+
+    <!-- News Detail Modal -->
+    <div class="news-modal-overlay" id="newsDetailModal" onclick="closeNewsDetailOnOverlay(event)">
+        <div class="news-modal-box">
+            <div class="news-modal-close" onclick="closeNewsDetail()">&times;</div>
+            <img id="detailNewsImg" class="news-modal-header-img" src="" alt="News Image">
+            <div class="news-modal-content">
+                <div class="news-meta" style="margin-bottom: 16px;">
+                    <span class="news-badge" id="detailNewsCategory" style="position: static;">Kegiatan</span>
+                    <span class="news-meta-item"><i class="far fa-calendar-alt"></i> <span id="detailNewsDate"></span></span>
+                    <span class="news-meta-item"><i class="far fa-user"></i> <span id="detailNewsAuthor"></span></span>
+                </div>
+                <h2 id="detailNewsTitle" style="font-size: 1.8rem; margin-bottom: 20px; line-height: 1.3;"></h2>
+                <div id="detailNewsBody" style="font-size: 1.05rem; line-height: 1.8; color: var(--text); white-space: pre-line;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin PIN Authentication Modal -->
+    <div class="news-modal-overlay" id="adminLoginModal" onclick="closeAdminLoginOnOverlay(event)">
+        <div class="news-modal-box" style="max-width: 440px;">
+            <div class="news-modal-close" onclick="closeAdminLogin()">&times;</div>
+            <div class="news-modal-content" style="text-align: center; padding: 40px 32px;">
+                <div style="width: 64px; height: 64px; background: rgba(61, 90, 128, 0.1); color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin: 0 auto 20px;">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h3 style="font-size: 1.5rem; margin-bottom: 8px;">Akses Kelola Berita</h3>
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 24px;">Masukkan Password Admin untuk menambah atau mengedit berita/kegiatan.</p>
+                
+                <form onsubmit="checkAdminPIN(event)">
+                    <div class="admin-form-group">
+                        <label for="adminPinInput" style="text-align: center;">Password Admin</label>
+                        <input type="password" id="adminPinInput" class="admin-input" placeholder="Masukkan Password Admin" style="text-align: center; font-size: 1.1rem; letter-spacing: 1px;" required>
+                    </div>
+                    <div id="pinErrorMessage" style="color: #ef4444; font-size: 0.85rem; margin-bottom: 16px; display: none;">Password Admin salah, silakan coba lagi.</div>
+                    <button type="submit" class="admin-btn admin-btn-primary" style="width: 100%; justify-content: center; padding: 12px;">
+                        <i class="fas fa-key"></i> Masuk Admin
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Portal Management Modal -->
+    <div class="news-modal-overlay" id="adminNewsModal" onclick="closeAdminPortalOnOverlay(event)">
+        <div class="news-modal-box" style="max-width: 900px;">
+            <div class="news-modal-close" onclick="closeAdminPortal()">&times;</div>
+            <div class="news-modal-content">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; border-bottom: 1px solid var(--card-border); padding-bottom: 16px;">
+                    <div>
+                        <h3 style="font-size: 1.5rem; margin: 0;"><i class="fas fa-tasks" style="color: var(--primary);"></i> Panel Kelola Berita & Kegiatan</h3>
+                        <p style="font-size: 0.88rem; color: var(--text-muted); margin: 4px 0 0 0;">Tambah, edit, atau hapus konten secara mandiri.</p>
+                    </div>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button type="button" class="admin-btn admin-btn-primary" onclick="openNewsForm()"><i class="fas fa-plus"></i> + Berita Baru</button>
+                        <button type="button" class="admin-btn admin-btn-secondary" onclick="exportNewsJSON()" title="Download Backup JSON"><i class="fas fa-download"></i> Export</button>
+                        <button type="button" class="admin-btn admin-btn-secondary" onclick="document.getElementById('importJsonFile').click()" title="Upload Backup JSON"><i class="fas fa-upload"></i> Import</button>
+                        <input type="file" id="importJsonFile" accept=".json" style="display: none;" onchange="importNewsJSON(event)">
+                        <button type="button" class="admin-btn admin-btn-secondary" onclick="changeAdminPINPrompt()" title="Ubah PIN Admin"><i class="fas fa-shield-alt"></i> Ubah PIN</button>
+                    </div>
+                </div>
+
+                <!-- Form Modal View (Hidden by default, shown when adding/editing) -->
+                <div id="adminFormContainer" style="display: none; background: var(--bg-alt); padding: 24px; border-radius: 16px; margin-bottom: 24px; border: 1px solid var(--card-border);">
+                    <h4 id="adminFormTitle" style="font-size: 1.2rem; margin-bottom: 20px; color: var(--primary);">Tambah Berita Baru</h4>
+                    <form id="newsForm" onsubmit="saveNewsFromForm(event)">
+                        <input type="hidden" id="newsFormId" value="">
+                        
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
+                            <div class="admin-form-group">
+                                <label for="formTitle">Judul Berita / Kegiatan *</label>
+                                <input type="text" id="formTitle" class="admin-input" placeholder="Contoh: Panen Raya Edamame..." required>
+                            </div>
+                            <div class="admin-form-group">
+                                <label for="formCategory">Kategori *</label>
+                                <select id="formCategory" class="admin-input" required>
+                                    <option value="Berita">Berita</option>
+                                    <option value="Kegiatan">Kegiatan</option>
+                                    <option value="Peternakan">Peternakan</option>
+                                    <option value="Pertanian">Pertanian</option>
+                                    <option value="Edukasi">Edukasi</option>
+                                    <option value="Pengumuman">Pengumuman</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
+                            <div class="admin-form-group">
+                                <label for="formAuthor">Penulis / Sumber *</label>
+                                <input type="text" id="formAuthor" class="admin-input" placeholder="Contoh: Tim Narutala Farm" required>
+                            </div>
+                            <div class="admin-form-group">
+                                <label for="formDate">Tanggal *</label>
+                                <input type="date" id="formDate" class="admin-input" required>
+                            </div>
+                        </div>
+
+                        <div class="admin-form-group">
+                            <label>Foto Berita * (Upload Gambar atau Masukkan URL)</label>
+                            <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 8px; flex-wrap: wrap;">
+                                <input type="file" id="formImageFile" accept="image/*" class="admin-input" style="flex: 1; min-width: 200px;" onchange="handleImageUpload(event)">
+                                <span style="font-size: 0.85rem; color: var(--text-muted);">atau</span>
+                                <input type="url" id="formImageUrl" class="admin-input" placeholder="https://... (URL Foto)" style="flex: 1; min-width: 200px;" onchange="handleImageUrlInput(this.value)">
+                            </div>
+                            <div class="image-preview-container" id="imagePreviewBox">
+                                <span style="color: var(--text-muted); font-size: 0.85rem;" id="previewPlaceholder">Preview Foto akan muncul di sini</span>
+                                <img id="imagePreview" src="" alt="Preview" style="display: none;">
+                            </div>
+                        </div>
+
+                        <div class="admin-form-group">
+                            <label for="formExcerpt">Ringkasan Singkat (Tampil di Kartu Depan)</label>
+                            <textarea id="formExcerpt" class="admin-input" rows="2" placeholder="Ringkasan 1-2 kalimat untuk halaman depan..."></textarea>
+                        </div>
+
+                        <div class="admin-form-group">
+                            <label for="formContent">Isi Berita Lengkap *</label>
+                            <textarea id="formContent" class="admin-input" rows="6" placeholder="Tuliskan berita atau laporan kegiatan secara rinci..." required></textarea>
+                        </div>
+
+                        <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 20px;">
+                            <button type="button" class="admin-btn admin-btn-secondary" onclick="closeNewsForm()">Batal</button>
+                            <button type="submit" class="admin-btn admin-btn-primary"><i class="fas fa-save"></i> Simpan Berita</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Table of items -->
+                <div class="admin-table-wrapper">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 70px;">Foto</th>
+                                <th>Judul</th>
+                                <th>Kategori</th>
+                                <th>Penulis</th>
+                                <th>Tanggal</th>
+                                <th style="width: 110px; text-align: center;">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminNewsTableBody">
+                            <!-- Items populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div style="margin-top: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                    <button type="button" class="admin-btn admin-btn-secondary" style="font-size: 0.8rem; color: #ef4444;" onclick="resetToDefaultNews()"><i class="fas fa-undo"></i> Reset Data Default</button>
+                    <span style="font-size: 0.8rem; color: var(--text-muted);">Penyimpanan: LocalStorage Browser</span>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Contact Section -->
     <section id="kontak" class="section">
@@ -3739,6 +4238,433 @@
             // Reset form
             document.getElementById('contactForm').reset();
         }
+
+        // ── Dynamic News & Activity Management System ───────────────
+        const DEFAULT_NEWS = [];
+
+        const STORAGE_KEY_NEWS = 'narutala_news_data';
+        const STORAGE_KEY_PIN = 'narutala_admin_pin';
+
+        let currentImageDataBase64 = '';
+
+        function getStoredPIN() {
+            return localStorage.getItem(STORAGE_KEY_PIN) || 'nadiakesayanganku';
+        }
+
+        function getNewsData() {
+            const raw = localStorage.getItem(STORAGE_KEY_NEWS);
+            if (!raw) {
+                localStorage.setItem(STORAGE_KEY_NEWS, JSON.stringify([]));
+                return [];
+            }
+            try {
+                const parsed = JSON.parse(raw);
+                // Check if stored news contains old sample data (news-1, news-2, news-3) and auto-clear if so
+                if (Array.isArray(parsed) && parsed.length > 0 && (parsed[0].id === 'news-1' || parsed[0].id === 'news-2')) {
+                    localStorage.setItem(STORAGE_KEY_NEWS, JSON.stringify([]));
+                    return [];
+                }
+                return parsed;
+            } catch (e) {
+                console.error("Failed to parse stored news", e);
+                return [];
+            }
+        }
+
+        function saveNewsData(newsArray) {
+            localStorage.setItem(STORAGE_KEY_NEWS, JSON.stringify(newsArray));
+            renderNewsGrid();
+            renderAdminNewsTable();
+        }
+
+        function formatDateID(dateStr) {
+            if (!dateStr) return '';
+            const parts = dateStr.split('-');
+            if (parts.length !== 3) return dateStr;
+            const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+            const year = parts[0];
+            const month = months[parseInt(parts[1], 10) - 1] || parts[1];
+            const day = parseInt(parts[2], 10);
+            return `${day} ${month} ${year}`;
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function renderNewsGrid() {
+            const grid = document.getElementById('newsGrid');
+            if (!grid) return;
+            const newsList = getNewsData();
+
+            if (newsList.length === 0) {
+                grid.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 40px; background: var(--bg-alt); border-radius: 16px; border: 2px dashed var(--card-border);">
+                        <p style="color: var(--text-muted); font-size: 1.1rem; margin-bottom: 12px;">Belum ada berita atau kegiatan yang ditambahkan.</p>
+                        <button class="admin-btn admin-btn-primary" onclick="openAdminAuth()"><i class="fas fa-plus"></i> Tambah Berita Pertama</button>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = newsList.map((item, idx) => {
+                const excerptText = item.excerpt || (item.content ? item.content.substring(0, 120) + '...' : '');
+                const formattedDate = formatDateID(item.date);
+                const isEn = document.documentElement.lang === 'en';
+                const readMoreText = isEn ? 'Read More' : 'Baca Selengkapnya';
+
+                return `
+                    <div class="news-card fade-in visible">
+                        <div class="news-card-img-wrapper">
+                            <img src="${item.image || 'assets/hero-bg.jpg'}" alt="${escapeHtml(item.title)}" onerror="this.src='assets/hero-bg.jpg'">
+                            <span class="news-badge">${escapeHtml(item.category || 'Berita')}</span>
+                        </div>
+                        <div class="news-card-body">
+                            <div class="news-meta">
+                                <span class="news-meta-item"><i class="far fa-calendar-alt"></i> ${formattedDate}</span>
+                                <span class="news-meta-item"><i class="far fa-user"></i> ${escapeHtml(item.author || 'Narutala')}</span>
+                            </div>
+                            <h3 class="news-card-title">${escapeHtml(item.title)}</h3>
+                            <p class="news-card-excerpt">${escapeHtml(excerptText)}</p>
+                            <div class="news-card-footer">
+                                <button type="button" class="btn-read-more" onclick="openNewsDetail('${item.id}')">
+                                    <span>${readMoreText}</span> <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // News Detail Modal
+        function openNewsDetail(id) {
+            const newsList = getNewsData();
+            const item = newsList.find(n => n.id === id);
+            if (!item) return;
+
+            document.getElementById('detailNewsImg').src = item.image || 'assets/hero-bg.jpg';
+            document.getElementById('detailNewsCategory').textContent = item.category || 'Berita';
+            document.getElementById('detailNewsDate').textContent = formatDateID(item.date);
+            document.getElementById('detailNewsAuthor').textContent = item.author || 'Narutala';
+            document.getElementById('detailNewsTitle').textContent = item.title;
+            document.getElementById('detailNewsBody').textContent = item.content || item.excerpt;
+
+            document.getElementById('newsDetailModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeNewsDetail() {
+            document.getElementById('newsDetailModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function closeNewsDetailOnOverlay(e) {
+            if (e.target === document.getElementById('newsDetailModal')) {
+                closeNewsDetail();
+            }
+        }
+
+        // Admin Security & Access
+        function openAdminAuth() {
+            document.getElementById('adminPinInput').value = '';
+            document.getElementById('pinErrorMessage').style.display = 'none';
+            document.getElementById('adminLoginModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => {
+                document.getElementById('adminPinInput').focus();
+            }, 200);
+        }
+
+        function closeAdminLogin() {
+            document.getElementById('adminLoginModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function closeAdminLoginOnOverlay(e) {
+            if (e.target === document.getElementById('adminLoginModal')) {
+                closeAdminLogin();
+            }
+        }
+
+        function checkAdminPIN(e) {
+            e.preventDefault();
+            const inputPIN = document.getElementById('adminPinInput').value.trim();
+            const validPIN = getStoredPIN();
+
+            if (inputPIN === validPIN) {
+                closeAdminLogin();
+                openAdminPortal();
+            } else {
+                document.getElementById('pinErrorMessage').style.display = 'block';
+            }
+        }
+
+        function changeAdminPINPrompt() {
+            const currentPIN = getStoredPIN();
+            const oldInput = prompt("Masukkan PIN lama Anda:");
+            if (oldInput !== currentPIN) {
+                if (oldInput !== null) alert("PIN lama tidak sesuai!");
+                return;
+            }
+            const newPIN = prompt("Masukkan PIN baru (4-6 digit angka):");
+            if (newPIN && newPIN.trim().length >= 4) {
+                localStorage.setItem(STORAGE_KEY_PIN, newPIN.trim());
+                alert("PIN Admin berhasil diperbarui!");
+            } else if (newPIN !== null) {
+                alert("PIN minimal 4 digit.");
+            }
+        }
+
+        // Admin Portal
+        function openAdminPortal() {
+            renderAdminNewsTable();
+            closeNewsForm();
+            document.getElementById('adminNewsModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeAdminPortal() {
+            document.getElementById('adminNewsModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function closeAdminPortalOnOverlay(e) {
+            if (e.target === document.getElementById('adminNewsModal')) {
+                closeAdminPortal();
+            }
+        }
+
+        function renderAdminNewsTable() {
+            const tbody = document.getElementById('adminNewsTableBody');
+            if (!tbody) return;
+            const newsList = getNewsData();
+
+            if (newsList.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 24px; color: var(--text-muted);">
+                            Belum ada berita. Klik "+ Berita Baru" untuk menambahkan.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = newsList.map(item => `
+                <tr>
+                    <td>
+                        <img src="${item.image || 'assets/hero-bg.jpg'}" alt="Thumb" style="width: 48px; height: 36px; object-fit: cover; border-radius: 6px;" onerror="this.src='assets/hero-bg.jpg'">
+                    </td>
+                    <td style="font-weight: 600; max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${escapeHtml(item.title)}</td>
+                    <td><span class="news-badge" style="position: static; font-size: 0.7rem; padding: 2px 8px;">${escapeHtml(item.category)}</span></td>
+                    <td>${escapeHtml(item.author)}</td>
+                    <td>${escapeHtml(item.date)}</td>
+                    <td style="text-align: center;">
+                        <button type="button" class="admin-btn admin-btn-secondary" style="padding: 4px 8px; font-size: 0.8rem;" onclick="editNewsItem('${item.id}')" title="Edit"><i class="fas fa-pencil-alt"></i></button>
+                        <button type="button" class="admin-btn admin-btn-danger" style="padding: 4px 8px; font-size: 0.8rem;" onclick="deleteNewsItem('${item.id}')" title="Hapus"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Form Add / Edit
+        function openNewsForm(editId = null) {
+            const formContainer = document.getElementById('adminFormContainer');
+            const form = document.getElementById('newsForm');
+            form.reset();
+            currentImageDataBase64 = '';
+            document.getElementById('previewPlaceholder').style.display = 'block';
+            document.getElementById('imagePreview').style.display = 'none';
+            document.getElementById('imagePreview').src = '';
+
+            if (editId) {
+                const newsList = getNewsData();
+                const item = newsList.find(n => n.id === editId);
+                if (item) {
+                    document.getElementById('adminFormTitle').textContent = 'Edit Berita / Kegiatan';
+                    document.getElementById('newsFormId').value = item.id;
+                    document.getElementById('formTitle').value = item.title;
+                    document.getElementById('formCategory').value = item.category || 'Berita';
+                    document.getElementById('formAuthor').value = item.author || '';
+                    document.getElementById('formDate').value = item.date || '';
+                    document.getElementById('formExcerpt').value = item.excerpt || '';
+                    document.getElementById('formContent').value = item.content || '';
+
+                    if (item.image) {
+                        currentImageDataBase64 = item.image;
+                        document.getElementById('imagePreview').src = item.image;
+                        document.getElementById('imagePreview').style.display = 'block';
+                        document.getElementById('previewPlaceholder').style.display = 'none';
+                        if (item.image.startsWith('http')) {
+                            document.getElementById('formImageUrl').value = item.image;
+                        }
+                    }
+                }
+            } else {
+                document.getElementById('adminFormTitle').textContent = 'Tambah Berita Baru';
+                document.getElementById('newsFormId').value = '';
+                // Set default date to today
+                const today = new Date().toISOString().split('T')[0];
+                document.getElementById('formDate').value = today;
+                document.getElementById('formAuthor').value = 'Tim Narutala';
+            }
+
+            formContainer.style.display = 'block';
+            formContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function closeNewsForm() {
+            document.getElementById('adminFormContainer').style.display = 'none';
+        }
+
+        function handleImageUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            // Compress & resize image to max 1200px before saving Base64
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    let width = img.width;
+                    let height = img.height;
+                    const maxDim = 1200;
+
+                    if (width > maxDim || height > maxDim) {
+                        if (width > height) {
+                            height = Math.round((height * maxDim) / width);
+                            width = maxDim;
+                        } else {
+                            width = Math.round((width * maxDim) / height);
+                            height = maxDim;
+                        }
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    currentImageDataBase64 = canvas.toDataURL('image/jpeg', 0.82);
+                    document.getElementById('imagePreview').src = currentImageDataBase64;
+                    document.getElementById('imagePreview').style.display = 'block';
+                    document.getElementById('previewPlaceholder').style.display = 'none';
+                    document.getElementById('formImageUrl').value = '';
+                };
+                img.src = evt.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function handleImageUrlInput(url) {
+            if (!url) return;
+            currentImageDataBase64 = url;
+            document.getElementById('imagePreview').src = url;
+            document.getElementById('imagePreview').style.display = 'block';
+            document.getElementById('previewPlaceholder').style.display = 'none';
+        }
+
+        function saveNewsFromForm(e) {
+            e.preventDefault();
+
+            const id = document.getElementById('newsFormId').value || 'news-' + Date.now();
+            const title = document.getElementById('formTitle').value.trim();
+            const category = document.getElementById('formCategory').value;
+            const author = document.getElementById('formAuthor').value.trim();
+            const date = document.getElementById('formDate').value;
+            const excerpt = document.getElementById('formExcerpt').value.trim();
+            const content = document.getElementById('formContent').value.trim();
+            const image = currentImageDataBase64 || document.getElementById('formImageUrl').value.trim() || 'assets/hero-bg.jpg';
+
+            const newsList = getNewsData();
+            const existingIdx = newsList.findIndex(n => n.id === id);
+
+            const newsItem = {
+                id,
+                title,
+                category,
+                author,
+                date,
+                image,
+                excerpt: excerpt || content.substring(0, 120) + '...',
+                content
+            };
+
+            if (existingIdx >= 0) {
+                newsList[existingIdx] = newsItem;
+            } else {
+                newsList.unshift(newsItem);
+            }
+
+            saveNewsData(newsList);
+            closeNewsForm();
+            alert('Berita berhasil disimpan!');
+        }
+
+        function editNewsItem(id) {
+            openNewsForm(id);
+        }
+
+        function deleteNewsItem(id) {
+            if (!confirm('Apakah Anda yakin ingin menghapus berita ini?')) return;
+            let newsList = getNewsData();
+            newsList = newsList.filter(n => n.id !== id);
+            saveNewsData(newsList);
+        }
+
+        function resetToDefaultNews() {
+            if (!confirm('Reset akan mengembalikan 3 berita awal Narutala. Apakah Anda yakin?')) return;
+            saveNewsData(DEFAULT_NEWS);
+            alert('Data berita telah di-reset ke default.');
+        }
+
+        // Export / Import JSON
+        function exportNewsJSON() {
+            const data = getNewsData();
+            const jsonStr = JSON.stringify(data, null, 2);
+            const blob = new Blob([jsonStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `narutala_berita_backup_${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function importNewsJSON(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                try {
+                    const imported = JSON.parse(evt.target.result);
+                    if (Array.isArray(imported)) {
+                        saveNewsData(imported);
+                        alert('Berita berhasil di-import!');
+                    } else {
+                        alert('Format file JSON tidak valid.');
+                    }
+                } catch (err) {
+                    alert('Gagal membaca file JSON: ' + err.message);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // Initialize News System on Page Load
+        document.addEventListener('DOMContentLoaded', () => {
+            renderNewsGrid();
+        });
     </script>
 </body>
 
