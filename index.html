@@ -4581,7 +4581,7 @@
             const file = e.target.files[0];
             if (!file) return;
 
-            // Compress & resize image to max 900px for lightweight Base64 Cloud Sync
+            // Compress & resize image to max 600px with 0.6 JPEG quality (~20KB) for fast Cloud Sync
             const reader = new FileReader();
             reader.onload = function(evt) {
                 const img = new Image();
@@ -4589,7 +4589,7 @@
                     const canvas = document.createElement('canvas');
                     let width = img.width;
                     let height = img.height;
-                    const maxDim = 900;
+                    const maxDim = 600;
 
                     if (width > maxDim || height > maxDim) {
                         if (width > height) {
@@ -4606,7 +4606,7 @@
                     const ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, width, height);
 
-                    currentImageDataBase64 = canvas.toDataURL('image/jpeg', 0.72);
+                    currentImageDataBase64 = canvas.toDataURL('image/jpeg', 0.6);
                     document.getElementById('imagePreview').src = currentImageDataBase64;
                     document.getElementById('imagePreview').style.display = 'block';
                     document.getElementById('previewPlaceholder').style.display = 'none';
