@@ -4247,8 +4247,70 @@
         const STORAGE_KEY_NEWS = 'narutala_news_data';
         const STORAGE_KEY_PIN = 'narutala_admin_pin';
 
-        let currentImageDataBase64 = '';
-        let isSyncing = false;
+        function getDefaultNews() {
+            return [
+                {
+                    id: 'news-anjar-asmoko-2026',
+                    title: 'Mengupas Rahasia Bisnis Perdombaan Omset Milyaran Bersama Bp. Anjar Asmoko dan Narutala Company',
+                    category: 'News & Events / Agribisnis / Edukasi',
+                    author: 'Tim Narutala Company',
+                    date: '2026-06-19',
+                    image: 'assets/news-sharing-session-poster.jpg',
+                    excerpt: 'Sektor peternakan domba di Indonesia tidak lagi bisa dipandang sebatas usaha sampingan atau tradisional. Dengan manajemen modern dan integrasi industri hilir yang tepat, bisnis perdombaan terbukti memiliki potensi pasar yang sangat masif dan bernilai miliaran rupiah.',
+                    content: `<h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 12px; color: var(--text);">Mengubah Otak Bisnis Peternakan: Dari Hulu hingga Hilir</h3>
+<p style="margin-bottom: 14px;">Sektor peternakan domba di Indonesia tidak lagi bisa dipandang sebatas usaha sampingan atau tradisional. Dengan manajemen modern dan integrasi industri hilir yang tepat, bisnis perdombaan terbukti memiliki potensi pasar yang sangat masif dan bernilai miliaran rupiah.</p>
+<p style="margin-bottom: 14px;">Atas komitmen untuk terus mendorong demokratisasi ilmu dan edukasi agribisnis berkelanjutan, <strong>PT Narutala Dhana Mandiri (Narutala Company)</strong> kolaborasi bersama <strong>Kadoku BJ Farm</strong>, <strong>Sate Bangjo Group</strong>, dan <strong>Aila Aqiqah</strong> sukses menggelar <em>Sharing Session</em> daring bertajuk:</p>
+<blockquote style="border-left: 4px solid var(--primary); background: var(--bg-alt); padding: 14px 18px; border-radius: 0 12px 12px 0; margin: 18px 0; font-style: italic; font-weight: 600; color: var(--text);">"Sharing Session: Rahasia Sukses Bisnis Perdombaan dengan Omset Milyaran"</blockquote>
+<p style="margin-bottom: 20px;">Acara yang dilaksanakan secara <em>live</em> melalui Zoom Meeting pada <strong>Jumat, 19 Juni 2026</strong>, pukul 19.30–21.00 WIB ini diikuti secara antusias oleh puluhan peserta dari berbagai latar belakang, mulai dari peternak pemula, akademisi, hingga praktisi agribisnis dari berbagai wilayah.</p>
+
+<div style="margin: 24px 0; text-align: center;">
+    <img src="assets/news-zoom-speaker.png" alt="Sesi Zoom Sharing Session Bp. Anjar Asmoko" style="width: 100%; max-height: 380px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+    <span style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-top: 8px; font-style: italic;">Dokumentasi Sesi Live Zoom Meeting bersama Bp. Anjar Asmoko & Tim Narutala Company</span>
+</div>
+
+<h3 style="font-size: 1.25rem; font-weight: 700; margin-top: 28px; margin-bottom: 12px; color: var(--text);">Pembicara Spesial: Bp. Anjar Asmoko</h3>
+<p style="margin-bottom: 14px;">Dalam <em>sharing session</em> gratis ini, peserta mendapatkan kesempatan emas untuk menyerap pengalaman berharga secara langsung dari <strong>Bp. Anjar Asmoko</strong>, sosok praktisi andal di dunia peternakan dan kuliner olahan domba nasional.</p>
+<p style="margin-bottom: 10px;">Beliau menjabat sebagai:</p>
+<ul style="padding-left: 24px; margin-bottom: 16px; line-height: 1.8;">
+    <li><strong>Chairman PT Aila Agradaya Indonesia</strong></li>
+    <li><strong>Owner Sate Bangjo Group</strong></li>
+    <li><strong>Owner Kadoku BJ Farm</strong></li>
+    <li><strong>Owner Aila Aqiqah</strong></li>
+</ul>
+<p style="margin-bottom: 20px;">Dengan pengalaman mengelola ekosistem peternakan terpadu, Pak Anjar membagikan cetak biru (<em>blueprint</em>) praktis bagaimana membangun rantai pasok domba yang tangguh dari kandang hingga meja makan konsumen.</p>
+
+<h3 style="font-size: 1.25rem; font-weight: 700; margin-top: 28px; margin-bottom: 14px; color: var(--text);">3 Poin Utama yang Dibongkar Tuntas dalam Acara</h3>
+
+<h4 style="font-size: 1.05rem; font-weight: 700; margin-top: 16px; margin-bottom: 8px; color: var(--primary);">1. Strategi Kelola Ribuan Ekor Domba Fattening</h4>
+<p style="margin-bottom: 16px;">Mengelola ternak dalam skala besar memerlukan presisi—mulai dari tata kelola pakan (nutrisi), kesehatan hewan, hingga efisiensi operasional harian. Pak Anjar menekankan pentingnya standarisasi manajemen <em>fattening</em> (penggemukan) agar laju pertambahan bobot harian (ADG) optimal dan efisien dari segi biaya.</p>
+
+<h4 style="font-size: 1.05rem; font-weight: 700; margin-top: 16px; margin-bottom: 8px; color: var(--primary);">2. Jaminan Pasar: Solusi "Anti Bingung Jual"</h4>
+<p style="margin-bottom: 16px;">Tantangan terbesar yang sering dihadapi peternak pemula adalah kepastian pemasaran. Melalui sesi ini, dipaparkan bagaimana membangun sistem integrasi di mana hasil panen ternak terserap secara pasti oleh ekosistem industri hilir yang telah terbangun.</p>
+
+<h4 style="font-size: 1.05rem; font-weight: 700; margin-top: 16px; margin-bottom: 8px; color: var(--primary);">3. Terobosan Ekspansi ke Industri Hilir</h4>
+<p style="margin-bottom: 20px;">Peternakan tidak berhenti di kandang. Nilai tambah (<em>added value</em>) terbesar justru berada di industri hilir. Pak Anjar membagikan pengalaman nyata mendirikan dan mengelola puluhan unit bisnis hilir seperti restoran <strong>Sate Bangjo</strong> dan layanan <strong>Aila Aqiqah</strong>, yang menjadi penyerap utama stok domba secara konsisten.</p>
+
+<div style="margin: 24px 0; text-align: center;">
+    <img src="assets/news-zoom-participants.png" alt="Peserta Zoom Meeting Narutala" style="width: 100%; max-height: 380px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+    <span style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-top: 8px; font-style: italic;">Antusiasme para peserta dari berbagai wilayah saat mengikuti Sharing Session</span>
+</div>
+
+<h3 style="font-size: 1.25rem; font-weight: 700; margin-top: 28px; margin-bottom: 12px; color: var(--text);">Sinergi Narutala Company: "Be the Light, Sustain the Life"</h3>
+<p style="margin-bottom: 14px;">Sebagai bagian dari komitmen Narutala Company dalam membangun ekosistem agribisnis terpadu berbasis <em>Zero Waste</em> dan edukasi berkelanjutan, kegiatan ini menjadi bukti nyata bahwa sinergi antar-pelaku industri adalah kunci kemajuan peternakan Indonesia.</p>
+<blockquote style="border-left: 4px solid var(--primary); background: var(--bg-alt); padding: 14px 18px; border-radius: 0 12px 12px 0; margin: 18px 0; font-style: italic; color: var(--text);">"Kami percaya bahwa ilmu yang dibagikan dan kolaborasi yang terjalin akan menjadi pemicu munculnya peternak-peternak muda modern yang siap bersaing secara profesional."</blockquote>
+
+<h3 style="font-size: 1.25rem; font-weight: 700; margin-top: 28px; margin-bottom: 12px; color: var(--text);">Nantikan Event dan Program Edukasi Berikutnya!</h3>
+<p style="margin-bottom: 14px;">Bagi Anda yang belum sempat bergabung pada sesi kali ini, jangan berkecil hati! Narutala Company bersama mitra edukasi terus berkomitmen menghadirkan program pelatihan, <em>sharing session</em>, dan peluang kemitraan agribisnis berkesinambungan.</p>
+<p style="margin-bottom: 10px;">Tetap terhubung dengan kami melalui:</p>
+<ul style="padding-left: 24px; margin-bottom: 18px; line-height: 1.8;">
+    <li><strong>Website:</strong> <a href="https://www.narutala.com" target="_blank" style="color: var(--primary); text-decoration: underline;">www.narutala.com</a></li>
+    <li><strong>WhatsApp Admin:</strong> <a href="https://wa.me/6281947828896" target="_blank" style="color: var(--primary); text-decoration: underline;">0819-4782-8896</a></li>
+    <li><strong>Instagram:</strong> <a href="https://instagram.com/narutalacompany" target="_blank" style="color: var(--primary); text-decoration: underline;">@narutalacompany</a></li>
+</ul>
+<p style="margin-top: 16px; font-style: italic; color: var(--text-muted);">Sampai jumpa di agenda edukasi Narutala selanjutnya! Together, let's be the light and sustain the life.</p>`
+                }
+            ];
+        }
 
         function getStoredPIN() {
             return localStorage.getItem(STORAGE_KEY_PIN) || 'nadiakesayanganku';
@@ -4256,16 +4318,16 @@
 
         function getNewsData() {
             const raw = localStorage.getItem(STORAGE_KEY_NEWS);
-            if (!raw) return [];
+            if (!raw) return getDefaultNews();
             try {
                 const parsed = JSON.parse(raw);
-                if (Array.isArray(parsed) && parsed.length > 0 && (parsed[0].id === 'news-1' || parsed[0].id === 'news-2')) {
-                    localStorage.setItem(STORAGE_KEY_NEWS, JSON.stringify([]));
-                    return [];
+                if (!Array.isArray(parsed) || parsed.length === 0 || (parsed.length > 0 && (parsed[0].id === 'news-1' || parsed[0].id === 'news-2' || parsed[0].image === 'assets/hero-bg.jpg'))) {
+                    localStorage.setItem(STORAGE_KEY_NEWS, JSON.stringify(getDefaultNews()));
+                    return getDefaultNews();
                 }
                 return parsed;
             } catch (e) {
-                return [];
+                return getDefaultNews();
             }
         }
 
@@ -4303,11 +4365,17 @@
                 const res = await fetch(CLOUD_DB_URL, { cache: 'no-cache' });
                 if (res.ok) {
                     const data = await res.json();
-                    if (Array.isArray(data)) {
+                    if (Array.isArray(data) && data.length > 0) {
                         localStorage.setItem(STORAGE_KEY_NEWS, JSON.stringify(data));
                         renderNewsGrid();
                         renderAdminNewsTable();
                         updateCloudStatus('<i class="fas fa-cloud-check"></i> Cloud Database: Terhubung & Terbaru', '#10b981');
+                    } else if (Array.isArray(data) && data.length === 0) {
+                        const defaultNews = getDefaultNews();
+                        localStorage.setItem(STORAGE_KEY_NEWS, JSON.stringify(defaultNews));
+                        renderNewsGrid();
+                        renderAdminNewsTable();
+                        await pushToCloud(defaultNews);
                     }
                 }
             } catch (err) {
@@ -4367,7 +4435,7 @@
             }
 
             grid.innerHTML = newsList.map((item, idx) => {
-                const excerptText = item.excerpt || (item.content ? item.content.substring(0, 120) + '...' : '');
+                const rawExcerpt = item.excerpt || (item.content ? item.content.replace(/<[^>]*>/g, '').substring(0, 140) + '...' : '');
                 const formattedDate = formatDateID(item.date);
                 const isEn = document.documentElement.lang === 'en';
                 const readMoreText = isEn ? 'Read More' : 'Baca Selengkapnya';
@@ -4384,7 +4452,7 @@
                                 <span class="news-meta-item"><i class="far fa-user"></i> ${escapeHtml(item.author || 'Narutala')}</span>
                             </div>
                             <h3 class="news-card-title">${escapeHtml(item.title)}</h3>
-                            <p class="news-card-excerpt">${escapeHtml(excerptText)}</p>
+                            <p class="news-card-excerpt">${escapeHtml(rawExcerpt)}</p>
                             <div class="news-card-footer">
                                 <button type="button" class="btn-read-more" onclick="openNewsDetail('${item.id}')">
                                     <span>${readMoreText}</span> <i class="fas fa-arrow-right"></i>
@@ -4407,7 +4475,13 @@
             document.getElementById('detailNewsDate').textContent = formatDateID(item.date);
             document.getElementById('detailNewsAuthor').textContent = item.author || 'Narutala';
             document.getElementById('detailNewsTitle').textContent = item.title;
-            document.getElementById('detailNewsBody').textContent = item.content || item.excerpt;
+            
+            const rawContent = item.content || item.excerpt || '';
+            if (rawContent.includes('<')) {
+                document.getElementById('detailNewsBody').innerHTML = rawContent;
+            } else {
+                document.getElementById('detailNewsBody').innerHTML = escapeHtml(rawContent).replace(/\n/g, '<br>');
+            }
 
             document.getElementById('newsDetailModal').classList.add('active');
             document.body.style.overflow = 'hidden';
@@ -4674,9 +4748,9 @@
         }
 
         async function resetToDefaultNews() {
-            if (!confirm('Apakah Anda yakin ingin mengosongkan seluruh daftar berita?')) return;
-            await saveNewsData([]);
-            alert('Seluruh berita telah dikosongkan.');
+            if (!confirm('Apakah Anda yakin ingin mengembalikan daftar berita ke berita awal (default)?')) return;
+            await saveNewsData(getDefaultNews());
+            alert('Daftar berita telah dikembalikan ke berita default.');
         }
 
         // Export / Import JSON
